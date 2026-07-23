@@ -84,7 +84,19 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'C'  
- 
+  Airport4:
+    url: "https://lq-free.lancelot.dpdns.org/c/?token=@liqunchannel-ch-0723-0726-yxip-peyo5n4aiq97dt6b"
+    type: http
+    interval: 3600
+    path: ./proxy_providers/Airport4.yaml
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+      proxy: DIRECT
+    override:
+      udp: true
+      additional-prefix: 'D'  
   
   
 # 全局过滤节点  # 常用排除，保留不包含下面关键字的节点
