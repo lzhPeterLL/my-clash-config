@@ -6,7 +6,7 @@
 
 # ══ 订阅锚点 ══
 #Anchor_PR: &Anchor_PR {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://www.g.cn/generate_204', interval: 300}, filter: "^(?!.*(到期|过期|剩余|网址|官网|邮箱|订阅|套餐|流量|说明|重置)).*$"}
-Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动选择","🏡家宽","⚖️负载均衡", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇵🇭 菲律宾自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动", "🇵🇭 菲律宾自动","🇦🇺 澳大利亚自动", DIRECT, REJECT]}
+Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","🤔手动选择","♻️自动选择","🏡家宽","⚖️负载均衡", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇵🇭 菲律宾自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动", "🇵🇭 菲律宾自动","🇦🇺 澳大利亚自动", DIRECT, REJECT]}
 # 广告拦截策略模板
 Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT]}
 # ③ 策略锚点 # 代理组锚点 hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
@@ -84,7 +84,7 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'C'  
-
+  
   
 # 全局过滤节点  # 常用排除，保留不包含下面关键字的节点
 
@@ -208,7 +208,64 @@ dns:
   # Fake-IP 过滤列表（这些域名将返回真实 IP 而非 Fake-IP）
   fake-ip-filter-mode: blacklist       # Fake-IP 过滤模式：blacklist（黑名单）/ whitelist（白名单）
   fake-ip-ttl: 60
-  fake-ip-filter: ["localhost","+.lan","+.local","+.arpa","+.ntp.org","captive.apple.com","connectivitycheck.gstatic.com","msftconnecttest.com","msftncsi.com","openai.*","+.openai.*","report-v2.samsung.japps.cn","rule-set:private"]
+  fake-ip-filter:
+  - +.lan
+  - +.local
+  - +.localdomain
+  - +.home.arpa
+  - +.msftconnecttest.com
+  - +.msftncsi.com
+  - localhost.ptlogin2.qq.com
+  - localhost.sec.qq.com
+  - localhost.work.weixin.qq.com
+  - +.in-addr.arpa
+  - +.ip6.arpa
+  - time.*.com
+  - time.*.gov
+  - ntp.*.com
+  - pool.ntp.org
+  - +.ntp.org
+  - +.pool.ntp.org
+  - +.market.xiaomi.com
+  - +.stun.*.*
+  - +.stun.*.*.*
+  - +.turn.*.*
+  - +.turn.*.*.*
+  - +.n.n.srv.nintendo.net
+  - +.stun.playstation.net
+  - +.xboxlive.com
+  - stun.l.google.com
+  - stun1.l.google.com
+  - stun2.l.google.com
+  - stun3.l.google.com
+  - stun4.l.google.com
+  - global.turn.twilio.com
+  - auth.docker.io
+  - registry-1.docker.io
+  - index.docker.io
+  - hub.docker.com
+  - production.cloudflare.docker.com
+  - +.push.apple.com
+  - +.pub.3gppnetwork.org
+  - +.bing.com
+  - +.rustdesk.com
+  - +.todesk.com
+  - +.oray.com
+  - +.sunlogin.com
+  - +.teamviewer.com
+  - +.anydesk.com
+  - +.battlenet.com.cn
+  - +.wotgame.cn
+  - +.wggames.cn
+  - +.wowsgame.cn
+  - +.mcdn.bilivideo.cn
+  - +.miwifi.com
+  - +.courier.push.apple.com
+  - +.miui.com
+  - +.xiaomi.com
+  - +.xiaomi.net
+  - +.mijia.tech
+  - +.gotui.com
  
  
    
@@ -218,7 +275,12 @@ dns:
     - 'https://doh.pub/dns-query'
   
   # 用于解析下方 nameserver 中 DoH/DoT 的域名
-  default-nameserver: ["223.5.5.5", "119.29.29.29", "114.114.114.114", "180.76.76.76"]
+  default-nameserver:
+      - 'https://223.5.5.5/dns-query'
+      - 'https://223.6.6.6/dns-query'
+      - 'https://8.8.8.8/dns-query'
+      - 'https://1.1.1.1/dns-query'
+      - '223.5.5.5'
 
 
 
@@ -232,11 +294,17 @@ dns:
 
  
   # 主 DNS 服务器列表（用于实际域名解析）
-  nameserver: *global-dns
+  nameserver: 
+       - 'https://dns.alidns.com/dns-query'
+       - 'https://doh.pub/dns-query'
 
   
    # 节点域名解析服务器，仅用于解析代理节点的域名，不填则遵循 nameserver-policy、nameserver 和 fallback 的配置
-  proxy-server-nameserver: *cn-dns
+  proxy-server-nameserver: 
+      - 'https://cloudflare-dns.com/dns-query'
+      - 'https://dns.google/dns-query'
+      - 'https://dns.alidns.com/dns-query'
+      - 'https://doh.pub/dns-query'
   
   # 后备域名解析服务器，一般情况下使用境外 DNS，保证结果可信，配置 fallback 后默认启用 fallback-filter，geoip-code 为 cn
   fallback: 
@@ -247,9 +315,27 @@ dns:
   
   direct-nameserver-follow-policy: true
   nameserver-policy:
-    "rule-set:private": *cn-dns
-    "rule-set:cn": *cn-dns
-
+    geosite:cn:
+    - 'https://dns.alidns.com/dns-query'
+    - 'https://doh.pub/dns-query'
+    geosite:geolocation-!cn:
+    - 'https://cloudflare-dns.com/dns-query'
+    - 'https://dns.google/dns-query'
+    '+.jsdelivr.net':
+    - 'https://cloudflare-dns.com/dns-query'
+    - 'https://dns.google/dns-query'
+    '+.github.com':
+    - 'https://cloudflare-dns.com/dns-query'
+    - 'https://dns.google/dns-query'
+    '+.githubusercontent.com':
+    - 'https://cloudflare-dns.com/dns-query'
+    - 'https://dns.google/dns-query'
+    '+.githubassets.com':
+    - 'https://cloudflare-dns.com/dns-query'
+    - 'https://dns.google/dns-query'
+    '+.fastly.net':
+    - 'https://cloudflare-dns.com/dns-query'
+    - 'https://dns.google/dns-query'
 
 
 
@@ -271,8 +357,9 @@ sniffer:
 # ※※※※※※※※※※※※※※※ 代理策略组 ※※※※※※※※※※※※※※※
 # 策略组（按服务分组）
 proxy-groups:
-  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","⚖️负载均衡","🔯 澳大利亚故转","🔯 日本故转", "🔯 韩国故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇵🇭 菲律宾自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动", "🇵🇭 菲律宾自动"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
+  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","🤔手动选择","⚖️负载均衡","🔯 澳大利亚故转","🔯 日本故转", "🔯 韩国故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇵🇭 菲律宾自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动", "🇵🇭 菲律宾自动"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
   - {name: "♻️自动选择", <<: *Anchor_UT, filter: "^((?!(直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$", icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bastyon/default.svg'}
+  - {name: "🤔手动选择", type: select, include-all: true, tolerance: 20, interval: 300, exclude-filter: "(?i)(直连)", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/all.png"}
   - name:   "🏡家宽"
     type: select
     use:
@@ -329,11 +416,10 @@ proxy-groups:
   - {name: "🎵Spotify",   <<: *Anchor_OB, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/spotify/default.svg'} 
   - {name: "🎥Netflix",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png'} 
   - {name: "🎬YouTube",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube/default.svg'} 
-  - {name: "🎶YouTubeMusic",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube-music/default.svg'} 
+  #- {name: "🎶YouTubeMusic",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube-music/default.svg'} 
   - {name: "🎶TikTok",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/TikTok.png'} 
   - {name: "🌱Twitter",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/loneshu7/mihomo_rules_profile/refs/heads/master/icon/Twitter.png'} 
   - {name: "📰Facebook",   <<: *Anchor_OB, icon:   'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/meta/default.svg'} 
-  - {name: "📸Instagram",   <<: *Anchor_OB, icon:    'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/instagram/default.svg'} 
   - {name: "📺迪士尼TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
   - {name: "📺其他TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
   
@@ -484,13 +570,11 @@ rules:
   - DOMAIN-SUFFIX,ggpht.com,🎬YouTube
   - DOMAIN-SUFFIX,youtube-nocookie.com,🎬YouTube
   - DOMAIN-SUFFIX,youtubekids.com,🎬YouTube
-  - RULE-SET,YouTubeMusic,🎶YouTubeMusic
   - RULE-SET,TikTok,🎶TikTok         # TikTok 规则  
   - RULE-SET,Twitter,🌱Twitter       # Twitter (X)
   - RULE-SET,Twitter_ip,🌱Twitter,no-resolve    # Twitter IP  
   - RULE-SET,Facebook,📰Facebook     # Facebook/Meta
-  - RULE-SET,Facebook_ip,📰Facebook,no-resolve     # Facebooip
-  - RULE-SET,Instagram,📸Instagram   
+  - RULE-SET,Facebook_ip,📰Facebook,no-resolve     # Facebooip 
   - RULE-SET,Disney,📺迪士尼TV流媒体 
   - RULE-SET,AppleTV,📺其他TV流媒体  
   - RULE-SET,GlobalMedia,📺其他TV流媒体    # 流媒体集
@@ -615,8 +699,7 @@ rules:
   - DOMAIN-SUFFIX,shopeepay.co.id,💶金融支付   #虾皮（Shopee）电商在印尼的官方支付钱包
   - DOMAIN-SUFFIX,xendit.co,💶金融支付         #印尼等东南亚地区的主流支付网关。
   - DOMAIN-SUFFIX,doku.com,💶金融支付       #印尼等东南亚地区的主流支付网关。
-  
-  
+ 
   - RULE-SET,loyalsoldier-greatfire,🚀节点选择
   - RULE-SET,cloudflare-ip,🚀节点选择,no-resolve
   - RULE-SET,cloudfront-ip,🚀节点选择,no-resolve
@@ -651,7 +734,6 @@ rules:
   - RULE-SET,acc-geo-ip-asia-china,🎯直连,no-resolve #基于地理位置（Geo）的亚洲-中国域名和 IP 库 通过地理位置标签识别流量，是目前最准确的国内流量识别方式之一  
   - RULE-SET,cn-domain,🎯直连            # 中国大陆的网站 (重要兜底规则)
   - RULE-SET,private-ip,🎯直连,no-resolve   # 局域网 IP 直连 (防止环路)
-  - GEOIP,CN,🎯直连,no-resolve
   - DOMAIN-SUFFIX,alimama.com,🎯直连
   - DOMAIN-SUFFIX,zxtdjy.com,🎯直连
   - RULE-SET,blued,🎯直连
@@ -750,12 +832,6 @@ rule-providers:
     url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs'
     path: ./ruleset/meta-youtube.mrs
     interval: 85941
-  YouTubeMusic:
-    type: http
-    behavior: classical
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTubeMusic/YouTubeMusic_No_Resolve.yaml'
-    path: ./ruleset/YouTubeMusic_No_Resolve.yaml
-    interval: 85796
   TikTok:
     type: http
     behavior: domain
@@ -790,7 +866,6 @@ rule-providers:
     url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/facebook.mrs'
     path: ./ruleset/meta-ip-facebook.mrs
     interval: 85855
-  Instagram: {<<: *class-yaml, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/instagram.yaml",path: ./ruleset/instagram.yaml}
   Disney: {<<: *class-yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney_No_Resolve.yaml",path: ./ruleset/Disney_No_Resolve.yaml}    
   AppleTV: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AppleTV/AppleTV.yaml",path: ./ruleset/AppleTV.yaml}
   GlobalMedia: {<<: *class-yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical_No_Resolve.yaml",path: ./ruleset/GlobalMedia.yaml}  
