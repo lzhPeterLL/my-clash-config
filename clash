@@ -45,7 +45,7 @@ Anchor_AU: &Anchor_AU '^(?i)(?=.*(澳洲|澳大利亚|悉尼|墨尔本|布里斯
 #========= 订阅链接 ========#
 proxy-providers:
   Airport1:
-    url: "https://sub.danhu.dpdns.org/paste/TG@FProxies260627oX3VJoI/clash"
+    url: "https://sub.danhu.dpdns.org/paste/TG@FProxies260731AVXPjtI/clash"
     type: http
     interval: 3600          # 单位为秒，定时更新代理列表，24 小时一次
     path: ./proxy_providers/Airport1.yaml
