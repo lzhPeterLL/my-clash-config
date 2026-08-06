@@ -8,7 +8,7 @@
 #Anchor_PR: &Anchor_PR {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://www.g.cn/generate_204', interval: 300}, filter: "^(?!.*(到期|过期|剩余|网址|官网|邮箱|订阅|套餐|流量|说明|重置)).*$"}
 Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","🤔手动选择","♻️自动选择","🏡家宽","⚖️负载均衡", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇵🇭 菲律宾自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动", "🇵🇭 菲律宾自动","🇦🇺 澳大利亚自动", DIRECT, REJECT]}
 # 广告拦截策略模板
-Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT]}
+Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT,"🚀节点选择"]}
 # ③ 策略锚点 # 代理组锚点 hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
 # 手动选择
 Anchor_HS: &Anchor_HS {type: select,hidden: true, include-all: true, url: 'https://www.gstatic.com/generate_204'}
@@ -84,7 +84,9 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'C'  
-  
+
+
+
   
 # 全局过滤节点  # 常用排除，保留不包含下面关键字的节点
 
@@ -180,7 +182,11 @@ tun:
 geodata-mode: true             # 数据分流  使用数据集进行规则与分流匹配
 geodata-loader: standard
 geosite-matcher: succinct
-geox-url: {geoip: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/geoip.dat", geosite: "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat", mmdb: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-Country.mmdb", asn: "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb"}
+geox-url:
+  geoip: 'https://fastly.jsdelivr.net/gh/Loyalsoldier/geoip@release/geoip.dat'
+  mmdb: 'https://fastly.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb'
+  asn: 'https://fastly.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb'
+  geosite: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat'
 geo-auto-update: true     # 是否自动更新
 geo-update-interval: 24  # 单位小时，更新间隔，每天更新
 
@@ -419,7 +425,7 @@ proxy-groups:
   #- {name: "🎶YouTubeMusic",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube-music/default.svg'} 
   - {name: "🎶TikTok",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/TikTok.png'} 
   - {name: "🌱Twitter",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/loneshu7/mihomo_rules_profile/refs/heads/master/icon/Twitter.png'} 
-  - {name: "📰Facebook",   <<: *Anchor_OB, icon:   'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/meta/default.svg'} 
+  - {name: "📘Meta",   <<: *Anchor_OB, icon:   'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/meta/default.svg'} 
   - {name: "📺迪士尼TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
   - {name: "📺其他TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
   
@@ -546,6 +552,8 @@ rules:
   - PROCESS-NAME,WeChat.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT
   - RULE-SET,reject,🛑 广告拦截          
+  - RULE-SET,youtube@ads,🛑 广告拦截    #油管广告
+  - RULE-SET,spotify@ads,🛑 广告拦截
   - RULE-SET,getui,🎯直连           #  国内个推推送服务 
   - RULE-SET,privacy,🛑 广告拦截     # 拦截隐私追踪拦截手机、电脑软件后台偷偷上传用户数据的行为
   - RULE-SET,advertising,🛑 广告拦截      #基础广告过滤和多盟（Domob）广告平台拦截
@@ -556,6 +564,7 @@ rules:
   - RULE-SET,domob,🛑 广告拦截                     #基础广告过滤和多盟（Domob）移动广告平台拦截。
   - RULE-SET,hijacking,🛑 广告拦截                      #防止 ISP 运营商劫持（比如你在网页右下角看到的莫名其妙的运营商小广告）。 
   - RULE-SET,acc-prerepaireasyprivacy,🛑 广告拦截  #预处理简易隐私保护。这是一个针对隐私保护规则的预修复补丁，专门拦截那些试图通过复杂脚本规避检测的隐私追踪器。
+
   - DOMAIN-SUFFIX,dingtalk.com,DIRECT   #阿里巴巴旗下 钉钉（DingTalk） 的全球核心服务域名。包括钉钉聊天、打卡定位、审批流、钉盘文件传输以及钉钉视频会议。
   - DOMAIN-SUFFIX,chiphell.com,DIRECT    #国内大名鼎鼎的 Chiphell（专注于高端电脑硬件、数码、摄影及生活品质的综合性论坛） 官网。这是一个纯国内的网站，服务器也位于国内。直连可以让你在刷帖子、看高清硬件评测图片、回帖时获得最快的速度，完全不需要浪费代理节点的流量。
   - RULE-SET,Spotify,🎵Spotify       # Spotify 音乐
@@ -573,16 +582,23 @@ rules:
   - RULE-SET,TikTok,🎶TikTok         # TikTok 规则  
   - RULE-SET,Twitter,🌱Twitter       # Twitter (X)
   - RULE-SET,Twitter_ip,🌱Twitter,no-resolve    # Twitter IP  
-  - RULE-SET,Facebook,📰Facebook     # Facebook/Meta
-  - RULE-SET,Facebook_ip,📰Facebook,no-resolve     # Facebooip 
+  - RULE-SET,Facebook,📘Meta     # Facebook/Meta
+  - RULE-SET,Facebook_ip,📘Meta     # Facebooip 
+  - RULE-SET,instagram,📘Meta 
+  - RULE-SET,whatsapp,📘Meta 
   - RULE-SET,Disney,📺迪士尼TV流媒体 
   - RULE-SET,AppleTV,📺其他TV流媒体  
   - RULE-SET,GlobalMedia,📺其他TV流媒体    # 流媒体集
+  - RULE-SET,abema,📺其他TV流媒体    #日本 AbemaTV（包含大量的日剧、综艺、动漫和体育直播）。
+  - RULE-SET,primevideo,📺其他TV流媒体  #亚马逊旗下 Prime Video 影视服务。
+  - RULE-SET,hulu,📺其他TV流媒体    # 美国知名影视流媒体平台
+  - RULE-SET,hbo,📺其他TV流媒体    #HBO Max / Ma
+  - RULE-SET,twitch,📺其他TV流媒体  #全球最大的游戏直播平台
+  
   - RULE-SET,Communication,💬国际即时通讯    #国际即时通讯 (WhatsApp/Line等)
   - RULE-SET,SocialMedia,💬国际即时通讯      # 国际社交平台
   - RULE-SET,kakaotalk,💬国际即时通讯      # 国际社交平台
   - RULE-SET,line,💬国际即时通讯      # 国际社交平台
-  - RULE-SET,whatsapp,💬国际即时通讯      # 国际社交平台
   - RULE-SET,AI,🧠AI 
   - RULE-SET,gemini,🧠AI 
   - RULE-SET,openai,🧠AI  
@@ -590,12 +606,12 @@ rules:
   - RULE-SET,Steam,🎮游戏平台
   - RULE-SET,Nintendo,🎮游戏平台           # 任天堂
   - RULE-SET,games-!cn,🎮游戏平台          
-  - RULE-SET,GamesGlobal,🎮游戏平台        # 非中国区游戏平台走代理兜底
+  - RULE-SET,GamesGlobal,🎮游戏平台  # 非中国区游戏平台走代理兜底
   - RULE-SET,epic,🎮游戏平台        #端核心游戏商店，负责处理游戏购买、社区交互及云存档。
   - RULE-SET,gog,🎮游戏平台           #端核心游戏商店，负责处理游戏购买、社区交互及云存档
-  - RULE-SET,playstation,🎮游戏平台   #三大主机平台。拦截这些流量能解决 Switch eShop 加速、PSN 登录难及 Xbox 系统更新慢的问题
-  - RULE-SET,nintendo,🎮游戏平台   #三大主机平台。拦截这些流量能解决 Switch eShop 加速、PSN 登录难及 Xbox 系统更新慢的问题
-  - RULE-SET,xbox,🎮游戏平台   #三大主机平台。拦截这些流量能解决 Switch eShop 加速、PSN 登录难及 Xbox 系统更新慢的问题
+  - RULE-SET,playstation,🎮游戏平台   #索尼 PSN 平台（PlayStation 商店、在线联机、系统更新、游戏下载等）
+  - RULE-SET,nintendo,🎮游戏平台   #任天堂 Nintendo 平台（Switch eShop 商店、任天堂 Online 联机、系统更新等）
+  - RULE-SET,xbox,🎮游戏平台   #微软 Xbox 平台（Xbox Live、Game Pass 服务、微软游戏商店下载等）
   - RULE-SET,rockstar,🎮游戏平台    #负责《英雄联盟》、《无畏契约》（Valorant）以及《激斗峡谷》的国际服连接。
   - RULE-SET,riot,🎮游戏平台    #负责《英雄联盟》、《无畏契约》（Valorant）以及《激斗峡谷》的国际服连接。
   - RULE-SET,wildrift,🎮游戏平台   #负责《英雄联盟》、《无畏契约》（Valorant）以及《激斗峡谷》的国际服连接。
@@ -620,9 +636,7 @@ rules:
   - RULE-SET,microsoft,🌀微软服务     # 微软泛官方主站与基础服务 规则集
   - RULE-SET,microsoftedge,🌀微软服务  # 微软 Edge 浏览器 专属规则集
   - RULE-SET,acc-microsoftapps,🌀微软服务    # 微软全家桶应用高级优化  
-  - RULE-SET,missav,🐬国外网站
-  - DOMAIN-SUFFIX,missav.ai,🐬国外网站
-  - DOMAIN-SUFFIX,jable.tv,🐬国外网站
+  - RULE-SET,category-porn,🐬国外网站    #18
   - RULE-SET,pornhub,🐬国外网站
   - RULE-SET,acc-aqara-global,🐬国外网站    #绿米 Aqara 智能家居的海外全球服务器，确保人在海外或者海外版网关能顺畅连接）。这是一条专为智能家居海外高级玩家或海外版设备准备的优化规则。它能确保你家里的境外智能家居设备在向国外服务器上传数据或接收指令时，网络永远稳定、不卡顿。
   - RULE-SET,GitHub,🐬国外网站                 # GitHub
@@ -675,6 +689,9 @@ rules:
   - RULE-SET,stripe,💶金融支付           # 全球最大的线上支付处理商之一。
   - RULE-SET,paypal,💶金融支付           # 全球通用的第三方支付工具。
   - RULE-SET,acc-vf-wise,💶金融支付       # 跨境汇款神器（原 TransferWise）。
+  - RULE-SET,hsbc,💶金融支付               # 汇丰银行
+  - RULE-SET,category-bank-jp,💶金融支付    #日本的银行及支付相关服务。
+  
   - DOMAIN-SUFFIX,stripe.com,💶金融支付    #全球最知名的线上信用卡收单网关 Stripe（包括其 CDN、开发者接口等）。
   - DOMAIN-SUFFIX,stripe.network,💶金融支付
   - DOMAIN-SUFFIX,stripecdn.com,💶金融支付
@@ -721,6 +738,7 @@ rules:
   - RULE-SET,private_ip,🎯直连,no-resolve
   - RULE-SET,GamesCN,🎯直连            # 国区游戏平台直连
   - RULE-SET,Bank-CN,🎯直连               # 银行客户端
+  - RULE-SET,category-bank-cn,🎯直连
   - RULE-SET,SteamCN,🎯直连           # Steam下载
   - RULE-SET,taptap,🎯直连           # TapTap（国内版）
   - RULE-SET,XboxCN,🎯直连          # Xbox 下载
@@ -785,6 +803,20 @@ rule-anchor:
 #========= 规则集 ========##自定义规则，替换为你自己的订阅规则，注意格式和语法
 rule-providers:
   reject: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/category-ads-all.mrs",path: ./ruleset/category-ads-all.mrs}
+  youtube@ads:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube@ads.mrs'
+    path: ./ruleset/youtube@ads.mrs
+    interval: 86026 
+  spotify@ads:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/spotify@ads.mrs'
+    path: ./ruleset/spotify@ads.mrs
+    interval: 86026   
   getui: {<<: *mrs-domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/getui.mrs",path: ./ruleset/geosite/getui.mrs}
   privacy: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/MIUIPrivacy/MIUIPrivacy.yaml",path: ./ruleset/MIUIPrivacy.yaml}
   advertising: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising.yaml",path: ./ruleset/Advertising.yaml}
@@ -796,7 +828,7 @@ rule-providers:
   hijacking: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Hijacking/Hijacking.yaml",path: ./ruleset/Hijacking.yaml}  
   miuiprivacy: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/MIUIPrivacy/MIUIPrivacy.yaml",path: ./ruleset/MIUIPrivacy.yaml}  
   acc-prerepaireasyprivacy: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@main/PreRepairEasyPrivacy/PreRepairEasyPrivacy.yaml",path: ./ruleset/PreRepairEasyPrivacy.yaml}  
-
+ 
   Spotify:
     type: http
     behavior: domain
@@ -815,7 +847,7 @@ rule-providers:
     type: http
     behavior: ipcidr
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/netflix.mrs'
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs'
     path: ./ruleset/meta-ip-netflix.mrs
     interval: 85974
   szkane-netflixip:
@@ -843,46 +875,106 @@ rule-providers:
     type: http
     behavior: domain
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs'
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitter.mrs'
     path: ./ruleset/meta-twitter.mrs
     interval: 85680
   Twitter_ip:
     type: http
     behavior: ipcidr
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs'
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/twitter.mrs'
     path: ./ruleset/meta-ip-twitter.mrs
     interval: 85736
   Facebook:
     type: http
-    behavior: classical
-    url: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Facebook/Facebook.yaml'
-    path: ./ruleset/bm7-Facebook.yaml
-    interval: 85796
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs'
+    path: ./ruleset/facebook.mrs
+    interval: 85680
   Facebook_ip:
     type: http
     behavior: ipcidr
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/facebook.mrs'
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/facebook.mrs'
     path: ./ruleset/meta-ip-facebook.mrs
     interval: 85855
-  Disney: {<<: *class-yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney_No_Resolve.yaml",path: ./ruleset/Disney_No_Resolve.yaml}    
+  instagram:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/instagram.mrs'
+    path: ./ruleset/facebook.mrs
+    interval: 85680
+  whatsapp:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/whatsapp.mrs'
+    path: ./ruleset/facebook.mrs
+    interval: 85680  
+  Disney:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/disney.mrs'
+    path: ./ruleset/disney.mrs
+    interval: 85553
   AppleTV: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AppleTV/AppleTV.yaml",path: ./ruleset/AppleTV.yaml}
   GlobalMedia: {<<: *class-yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical_No_Resolve.yaml",path: ./ruleset/GlobalMedia.yaml}  
-  
+  abema:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/abema.mrs'
+    path: ./ruleset/abema.mrs
+    interval: 85553
+  primevideo:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/primevideo.mrs'
+    path: ./ruleset/primevideo.mrs
+    interval: 85553  
+  hulu:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/hulu.mrs'
+    path: ./ruleset/hulu.mrs
+    interval: 85553    
+  hbo:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/hbo.mrs'
+    path: ./ruleset/hbo.mrs
+    interval: 85553    
+  twitch:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitch.mrs'
+    path: ./ruleset/twitch.mrs
+    interval: 85553       
   Communication: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-communication.mrs",path: ./ruleset/category-communication.mrs}
   SocialMedia: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-social-media-!cn.mrs",path: ./ruleset/category-social-media-!cn.mrs}
   kakaotalk: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/KakaoTalk/KakaoTalk.yaml",path: ./ruleset/bm7-KakaoTalk.yaml}
-  line: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Line/Line.yaml",path: ./ruleset/bm7-Line.yaml}
-  whatsapp: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Whatsapp/Whatsapp.yaml",path: ./ruleset/bm7-Whatsapp.yaml}
-  
+  line:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/line.mrs'
+    path: ./ruleset/meta-line.mrs
+    interval: 85553
   AI: {<<: *mrs-domain, url: "https://github.com/QuixoticHeart/rule-set/raw/refs/heads/ruleset/meta/domain/ai.mrs",path: ./ruleset/ai.mrs}
   gemini:
     type: http
-    behavior: classical
-    url: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml'
-    path: ./ruleset/bm7-Gemini.yaml
-    interval: 85579  
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google-gemini.mrs'
+    path: ./ruleset/meta-google-gemini.mrs
+    interval: 85553
   openai:
     type: http
     behavior: domain
@@ -1000,8 +1092,13 @@ rule-providers:
     path: ./ruleset/acc-microsoftapps.yaml
     interval: 90160
   
-
-  missav: {<<: *class-yaml, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/missav.yaml",path: ./ruleset/missav.yaml}
+  category-porn:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-porn.mrs'
+    path: ./ruleset/category-porn
+    interval: 86383  
   pornhub: {<<: *class-yaml, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/pornhub.yaml",path: ./ruleset/pornhub.yaml}
   acc-aqara-global:
     type: http
@@ -1083,7 +1180,9 @@ rule-providers:
   stripe: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Stripe/Stripe.yaml",path: ./ruleset/bm7-Stripe.yaml}
   paypal: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/PayPal/PayPal.yaml",path: ./ruleset/bm7-PayPal.yaml}
   acc-vf-wise: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@main/VirtualFinance/Wise.yaml",path: ./ruleset/acc-Wise.yaml}
-  
+  hsbc: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/hsbc.mrs",path: ./ruleset/hsbc.mrs}
+  category-bank-jp: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-bank-jp.mrs",path: ./ruleset/category-bank-jp.mrs}
+
   
   gfw: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/gfw.mrs",path: ./ruleset/gfw.mrs}
   loyalsoldier-gfw:
@@ -1113,6 +1212,8 @@ rule-providers:
     interval: 85644 
   GamesCN: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games-cn.mrs",path:./ruleset/category-games-cn.mrs}
   Bank-CN: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-bank-cn.mrs",path: ./ruleset/category-bank-cn.mrs}
+  category-bank-cn: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-bank-cn.mrs",path: ./ruleset/category-bank-cn.mrs}
+  
   SteamCN:
     type: http
     behavior: classical
