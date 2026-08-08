@@ -83,8 +83,33 @@ proxy-providers:
       proxy: DIRECT
     override:
       udp: true
-      additional-prefix: 'C'    
-
+      additional-prefix: 'C'  
+  Airport4:
+    url: "https://sub.445569.xyz"
+    type: http
+    interval: 3600
+    path: ./proxy_providers/Airport4.yaml
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+      proxy: DIRECT
+    override:
+      udp: true
+      additional-prefix: 'D'    
+  Airport5:
+    url: "https://lq-free.lancelot.dpdns.org/c/?token=@liqunchannel-lqgy-kgphfbejmvz8i4us-0731"
+    type: http
+    interval: 3600
+    path: ./proxy_providers/Airport5.yaml
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+      proxy: DIRECT
+    override:
+      udp: true
+      additional-prefix: 'E' 
 
   
 # 全局过滤节点  # 常用排除，保留不包含下面关键字的节点
@@ -551,8 +576,6 @@ rules:
   - PROCESS-NAME,WeChat.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT
   - RULE-SET,reject,🛑 广告拦截          
-  - RULE-SET,youtube@ads,🛑 广告拦截    #油管广告
-  - RULE-SET,spotify@ads,🛑 广告拦截
   - RULE-SET,getui,🎯直连           #  国内个推推送服务 
   - RULE-SET,privacy,🛑 广告拦截     # 拦截隐私追踪拦截手机、电脑软件后台偷偷上传用户数据的行为
   - RULE-SET,advertising,🛑 广告拦截      #基础广告过滤和多盟（Domob）广告平台拦截
@@ -618,6 +641,7 @@ rules:
   - RULE-SET,sony,🎮游戏平台    
   - RULE-SET,supercell,🎮游戏平台  #负责《部落冲突》、《皇室战争》等国际服数据同步。
   - RULE-SET,taptap-!cn,🎮游戏平台  #TapTap海外版
+  - RULE-SET,tencent@!cn,🎮游戏平台   #腾讯海外
   - RULE-SET,Telegram,✈️Telegram           # Telegram 域名
   - RULE-SET,Telegram-IP,✈️Telegram,no-resolve      # Telegram IP (通话/图片)
   - RULE-SET,Google,🪐Google服务                     # Google 全家桶
@@ -691,7 +715,6 @@ rules:
   - RULE-SET,acc-vf-wise,💶金融支付       # 跨境汇款神器（原 TransferWise）。
   - RULE-SET,hsbc,💶金融支付               # 汇丰银行
   - RULE-SET,category-bank-jp,💶金融支付    #日本的银行及支付相关服务。
-  
   - DOMAIN-SUFFIX,stripe.com,💶金融支付    #全球最知名的线上信用卡收单网关 Stripe（包括其 CDN、开发者接口等）。
   - DOMAIN-SUFFIX,stripe.network,💶金融支付
   - DOMAIN-SUFFIX,stripecdn.com,💶金融支付
@@ -727,6 +750,7 @@ rules:
   - RULE-SET,geolocation-!cn,🚀节点选择
   - RULE-SET,games-cn,🎯直连
 # ---CN 国内服务直连 ---# 非全局模式下该部分可以注释
+  - RULE-SET,bytedance,🧪抖音     #字节跳动
   - RULE-SET,douyin-zj,🧪抖音
   - RULE-SET,bilibili,🧸哔哩哔哩
   - RULE-SET,xiaohongshu,☁️小红书
@@ -789,6 +813,7 @@ rules:
   - IP-CIDR6,::1/128,DIRECT,no-resolve
   - IP-CIDR6,fc00::/7,DIRECT,no-resolve
   - IP-CIDR6,fe80::/10,DIRECT,no-resolve
+  - RULE-SET,geolocation-cn,🎯直连 
   - RULE-SET,cn,🎯直连    # 中国大陆 IP (重要兜底规则)
   - RULE-SET,cn-ip,🎯直连,no-resolve      # 中国大陆 IP (重要兜底规则)
   
@@ -802,21 +827,7 @@ rule-anchor:
 
 #========= 规则集 ========##自定义规则，替换为你自己的订阅规则，注意格式和语法
 rule-providers:
-  reject: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/category-ads-all.mrs",path: ./ruleset/category-ads-all.mrs}
-  youtube@ads:
-    type: http
-    behavior: domain
-    format: mrs
-    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube@ads.mrs'
-    path: ./ruleset/youtube@ads.mrs
-    interval: 86026 
-  spotify@ads:
-    type: http
-    behavior: domain
-    format: mrs
-    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/spotify@ads.mrs'
-    path: ./ruleset/spotify@ads.mrs
-    interval: 86026   
+  reject: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/category-ads-all.mrs",path: ./ruleset/category-ads-all.mrs}   
   getui: {<<: *mrs-domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/getui.mrs",path: ./ruleset/geosite/getui.mrs}
   privacy: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/MIUIPrivacy/MIUIPrivacy.yaml",path: ./ruleset/MIUIPrivacy.yaml}
   advertising: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising.yaml",path: ./ruleset/Advertising.yaml}
@@ -828,7 +839,6 @@ rule-providers:
   hijacking: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Hijacking/Hijacking.yaml",path: ./ruleset/Hijacking.yaml}  
   miuiprivacy: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/MIUIPrivacy/MIUIPrivacy.yaml",path: ./ruleset/MIUIPrivacy.yaml}  
   acc-prerepaireasyprivacy: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@main/PreRepairEasyPrivacy/PreRepairEasyPrivacy.yaml",path: ./ruleset/PreRepairEasyPrivacy.yaml}  
- 
   Spotify:
     type: http
     behavior: domain
@@ -985,6 +995,7 @@ rule-providers:
   WildRift-zj: {<<: *class-yaml, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/wildrift.yaml",path: ./ruleset/wildrift.yaml}
   Steam: {<<: *class-yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Steam/Steam.yaml",path: ./ruleset/Steam.yaml}
   Nintendo:  {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/nintendo.mrs",path: ./ruleset/nintendo.mrs}
+  games-!cn: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/category-games-!cn.mrs",path: ./ruleset/category-games-!cn.mrs}
   GamesGlobal: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games-!cn.mrs",path: ./ruleset/category-games-!cn.mrs}
   epic: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Epic/Epic.yaml",path: ./ruleset/Epic.yaml}
   gog: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gog/Gog.yaml",path: ./ruleset/Gog.yaml}
@@ -998,31 +1009,35 @@ rule-providers:
   sony: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Sony/Sony.yaml",path: ./ruleset/Sony.yaml}
   supercell: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Supercell/Supercell.yaml",path: ./ruleset/Supercell.yaml}
   taptap-!cn: {<<: *mrs-domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/taptap@!cn.mrs",path: ./ruleset/taptap@!cn.mrs}
-
-
-  games-!cn: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/category-games-!cn.mrs",path: ./ruleset/category-games-!cn.mrs}
+  tencent@!cn:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tencent@!cn.mrs'
+    path: ./ruleset/tencent@!cn.mrs
+    interval: 85644
   Telegram:
     type: http
     behavior: domain
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs'
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs'
     path: ./ruleset/meta-telegram.mrs
     interval: 85644
     path-in-bundle: 'geo/geosite/telegram.mrs'   #含义：这是针对高级打包/内置固件的预载路径声明。
 #实际作用：如果你的软路由系统或者客户端在出厂时就已经内置了一套离线规则数据库（Bundle），这行代码告诉内核：“如果一开机网络还没连通、无法从网上 url 下载时，你可以先去本地固件包的 geo/geosite/telegram.mrs 这个位置直接把离线版电报规则加载进来应急”，从而实现了零延迟开机启动，防止断网时软件报错。
-  Telegram-IP: {<<: *mrs-ipcidr, url: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs",path: ./ruleset/meta-ip-telegram.mrs}
+  Telegram-IP: {<<: *mrs-ipcidr, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs",path: ./ruleset/meta-ip-telegram.mrs}
   Google:
     type: http
     behavior: domain
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google.mrs'
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs'
     path: ./ruleset/meta-google.mrs
     interval: 85894
   Google-IP:
     type: http
     behavior: ipcidr
     format: mrs
-    url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/google.mrs'
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs'
     path: ./ruleset/meta-ip-google.mrs
     interval: 85910
   GoogleFCM:
@@ -1201,6 +1216,13 @@ rule-providers:
   greatfire: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/greatfire.mrs",path: ./ruleset/greatfire.mrs}
   geolocation-!cn: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs",path: ./ruleset/geolocation-!cn.mrs}
   games-cn: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/category-games-cn.mrs",path: ./ruleset/ategory-games-cn.mrs}
+  bytedance:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bytedance.mrs'
+    path: ./ruleset/bytedance.mrs
+    interval: 90033
   douyin-zj: {<<: *class-yaml, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/douyin.yaml",path: ./ruleset/douyin.yaml}
   bilibili: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bilibili.mrs",path: ./ruleset/bilibili.mrs}
   xiaohongshu:
@@ -1260,6 +1282,13 @@ rule-providers:
     url: 'https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Blued/Blued.yaml'
     path: ./ruleset/bm7-Blued.yaml
     interval: 87109
+  geolocation-cn:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-cn.mrs'
+    path: ./ruleset/geolocation-cn.mrs
+    interval: 86543
   cn:
     type: http
     behavior: domain
