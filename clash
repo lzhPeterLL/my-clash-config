@@ -97,19 +97,7 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'D'    
-  Airport5:
-    url: "https://lq-free.lancelot.dpdns.org/c/?token=@liqunchannel-lqgy-kgphfbejmvz8i4us-0731"
-    type: http
-    interval: 3600
-    path: ./proxy_providers/Airport5.yaml
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-      proxy: DIRECT
-    override:
-      udp: true
-      additional-prefix: 'E' 
+
 
   
 # 全局过滤节点  # 常用排除，保留不包含下面关键字的节点
@@ -751,7 +739,7 @@ rules:
   - RULE-SET,games-cn,🎯直连
 # ---CN 国内服务直连 ---# 非全局模式下该部分可以注释
   - RULE-SET,bytedance,🧪抖音     #字节跳动
-  - RULE-SET,douyin-zj,🧪抖音
+  - RULE-SET,douyin,🧪抖音
   - RULE-SET,bilibili,🧸哔哩哔哩
   - RULE-SET,xiaohongshu,☁️小红书
   - RULE-SET,Alibaba,🧬阿里腾讯
@@ -1223,7 +1211,13 @@ rule-providers:
     url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bytedance.mrs'
     path: ./ruleset/bytedance.mrs
     interval: 90033
-  douyin-zj: {<<: *class-yaml, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/douyin.yaml",path: ./ruleset/douyin.yaml}
+  douyin:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/douyin.mrs'
+    path: ./ruleset/douyin.mrs
+    interval: 85644 
   bilibili: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bilibili.mrs",path: ./ruleset/bilibili.mrs}
   xiaohongshu:
     type: http
