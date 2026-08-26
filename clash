@@ -6,7 +6,7 @@
 
 # ══ 订阅锚点 ══
 #Anchor_PR: &Anchor_PR {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://www.g.cn/generate_204', interval: 300}, filter: "^(?!.*(到期|过期|剩余|网址|官网|邮箱|订阅|套餐|流量|说明|重置)).*$"}
-Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","🤔手动选择","♻️自动选择","🏡家宽","⚖️负载均衡", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇵🇭 菲律宾自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动", "🇵🇭 菲律宾自动","🇦🇺 澳大利亚自动", DIRECT, REJECT]}
+Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点", DIRECT, REJECT]}
 # 广告拦截策略模板
 Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT,"🚀节点选择",🎯直连]}
 # ③ 策略锚点 # 代理组锚点 hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
@@ -45,7 +45,7 @@ Anchor_AU: &Anchor_AU '^(?i)(?=.*(澳洲|澳大利亚|悉尼|墨尔本|布里斯
 #========= 订阅链接 ========#
 proxy-providers:
   Airport1:
-    url: "https://sub.danhu.dpdns.org/paste/TG@FProxies260731AVXPjtI/clash"
+    url: "https://sub.danhu.dpdns.org/paste/TG@FProxies260822Y4qC45A/clash"
     type: http
     interval: 3600          # 单位为秒，定时更新代理列表，24 小时一次
     path: ./proxy_providers/Airport1.yaml
@@ -97,19 +97,7 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'D'    
-  Airport5:
-    url: "https://lq-free.lancelot.dpdns.org/c/?token=@liqunchannel-ch-48erl5izxa92wuvk-0813-0816"
-    type: http
-    interval: 3600
-    path: ./proxy_providers/Airport5.yaml
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-      proxy: DIRECT
-    override:
-      udp: true
-      additional-prefix: 'E'  
+
 
   
 # 全局过滤节点  # 常用排除，保留不包含下面关键字的节点
@@ -387,9 +375,8 @@ sniffer:
 # ※※※※※※※※※※※※※※※ 代理策略组 ※※※※※※※※※※※※※※※
 # 策略组（按服务分组）
 proxy-groups:
-  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","🤔手动选择","⚖️负载均衡","🔯 澳大利亚故转","🔯 日本故转", "🔯 韩国故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇵🇭 菲律宾自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇹🇷 土耳其自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动", "🇵🇭 菲律宾自动"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
-  - {name: "♻️自动选择", <<: *Anchor_UT, filter: "^((?!(直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$", icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bastyon/default.svg'}
-  - {name: "🤔手动选择", type: select, include-all: true, tolerance: 20, interval: 300, exclude-filter: "(?i)(直连)", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/all.png"}
+  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
+  - {name: "♻️自动选择", <<: *Anchor_UT, filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$", icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bastyon/default.svg'}
   - name:   "🏡家宽"
     type: select
     use:
@@ -586,7 +573,6 @@ rules:
   - RULE-SET,domob,🛑 广告拦截                     #基础广告过滤和多盟（Domob）移动广告平台拦截。
   - RULE-SET,hijacking,🛑 广告拦截                      #防止 ISP 运营商劫持（比如你在网页右下角看到的莫名其妙的运营商小广告）。 
   - RULE-SET,acc-prerepaireasyprivacy,🛑 广告拦截  #预处理简易隐私保护。这是一个针对隐私保护规则的预修复补丁，专门拦截那些试图通过复杂脚本规避检测的隐私追踪器。
-
   - DOMAIN-SUFFIX,dingtalk.com,DIRECT   #阿里巴巴旗下 钉钉（DingTalk） 的全球核心服务域名。包括钉钉聊天、打卡定位、审批流、钉盘文件传输以及钉钉视频会议。
   - DOMAIN-SUFFIX,chiphell.com,DIRECT    #国内大名鼎鼎的 Chiphell（专注于高端电脑硬件、数码、摄影及生活品质的综合性论坛） 官网。这是一个纯国内的网站，服务器也位于国内。直连可以让你在刷帖子、看高清硬件评测图片、回帖时获得最快的速度，完全不需要浪费代理节点的流量。
   - RULE-SET,Spotify,🎵Spotify       # Spotify 音乐
@@ -624,7 +610,6 @@ rules:
   - RULE-SET,AI,🧠AI 
   - RULE-SET,gemini,🧠AI 
   - RULE-SET,openai,🧠AI  
-  - RULE-SET,WildRift-zj,🎮游戏平台
   - RULE-SET,Steam,🎮游戏平台
   - RULE-SET,Nintendo,🎮游戏平台           # 任天堂
   - RULE-SET,games-!cn,🎮游戏平台          
@@ -642,6 +627,7 @@ rules:
   - RULE-SET,supercell,🎮游戏平台  #负责《部落冲突》、《皇室战争》等国际服数据同步。
   - RULE-SET,taptap-!cn,🎮游戏平台  #TapTap海外版
   - RULE-SET,tencent@!cn,🎮游戏平台   #腾讯海外
+  - RULE-SET,category-games,🎮游戏平台  #游戏合集
   - RULE-SET,Telegram,✈️Telegram           # Telegram 域名
   - RULE-SET,Telegram-IP,✈️Telegram,no-resolve      # Telegram IP (通话/图片)
   - RULE-SET,Google,🪐Google服务                     # Google 全家桶
@@ -659,7 +645,9 @@ rules:
   - RULE-SET,microsoft,🌀微软服务     # 微软泛官方主站与基础服务 规则集
   - RULE-SET,microsoftedge,🌀微软服务  # 微软 Edge 浏览器 专属规则集
   - RULE-SET,acc-microsoftapps,🌀微软服务    # 微软全家桶应用高级优化  
+ 
   - RULE-SET,category-porn,🐬国外网站    #18
+  - RULE-SET,missav,🐬国外网站 
   - RULE-SET,pornhub,🐬国外网站
   - RULE-SET,acc-aqara-global,🐬国外网站    #绿米 Aqara 智能家居的海外全球服务器，确保人在海外或者海外版网关能顺畅连接）。这是一条专为智能家居海外高级玩家或海外版设备准备的优化规则。它能确保你家里的境外智能家居设备在向国外服务器上传数据或接收指令时，网络永远稳定、不卡顿。
   - RULE-SET,GitHub,🐬国外网站                 # GitHub
@@ -692,6 +680,8 @@ rules:
   - DOMAIN-SUFFIX,neon.tech,🐬国外网站
   - RULE-SET,python,🐬国外网站      #Python 
   - RULE-SET,xiaomi@!cn,🐬国外网站  #小米海外或非中国大陆服务，如果你的小米设备使用的是国际版固件、海外账号，或者访问小米面向海外的服务器，流量会匹配这一条。
+  - RULE-SET,dropbox,🐬国外网站    #海外老牌知名云存储/网盘服务。
+  - RULE-SET,notion,🐬国外网站    #热门的跨平台协同笔记与知识库软件。
   - RULE-SET,Crypto,🧑‍💻货币                   # Bybit 等虚拟货币
   - RULE-SET,cryptocurrency,🧑‍💻货币          #这是一个综合性的加密货币大列表，包含了除币安外，其他主流交易所（如 OKX、Bybit、Coinbase）和常见公链钱包的域名。
   - RULE-SET,binance,🧑‍💻货币                 #把币安生态的所有分散域名和 IP 整体打包引入。
@@ -761,9 +751,10 @@ rules:
   - RULE-SET,private,🎯直连              # 局域网域名直连 (路由后台/NAS)
   - RULE-SET,private_ip,🎯直连,no-resolve
   - RULE-SET,GamesCN,🎯直连            # 国区游戏平台直连
+  - RULE-SET,category-games@cn,🎯直连
   - RULE-SET,Bank-CN,🎯直连               # 银行客户端
   - RULE-SET,category-bank-cn,🎯直连
-  - RULE-SET,SteamCN,🎯直连           # Steam下载
+  - RULE-SET,steam@cn,🎯直连           #  steam中国
   - RULE-SET,taptap,🎯直连           # TapTap（国内版）
   - RULE-SET,XboxCN,🎯直连          # Xbox 下载
   - RULE-SET,Accelerator,🎯直连    # 游戏加速器官网直连
@@ -992,16 +983,33 @@ rule-providers:
     url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/openai.mrs'
     path: ./ruleset/meta-openai.mrs
     interval: 85553
-  WildRift-zj: {<<: *class-yaml, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/wildrift.yaml",path: ./ruleset/wildrift.yaml}
-  Steam: {<<: *class-yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Steam/Steam.yaml",path: ./ruleset/Steam.yaml}
+  Steam:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs'
+    path: ./ruleset/steam.mrs
+    interval: 85553
   Nintendo:  {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/nintendo.mrs",path: ./ruleset/nintendo.mrs}
   games-!cn: {<<: *mrs-domain, url: "https://gh-proxy.com/https://raw.githubusercontent.com/SHICHUNHUI88/rules/main/geo/geosite/category-games-!cn.mrs",path: ./ruleset/category-games-!cn.mrs}
   GamesGlobal: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games-!cn.mrs",path: ./ruleset/category-games-!cn.mrs}
   epic: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Epic/Epic.yaml",path: ./ruleset/Epic.yaml}
   gog: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gog/Gog.yaml",path: ./ruleset/Gog.yaml}
   playstation: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/PlayStation/PlayStation.yaml",path: ./ruleset/PlayStation.yaml}
-  nintendo: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Nintendo/Nintendo.yaml",path: ./ruleset/Nintendo.yaml}
-  xbox: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Xbox/Xbox.yaml",path: ./ruleset/Xbox.yaml}
+  nintendo:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/nintendo.mrs'
+    path: ./ruleset/nintendo.mrs
+    interval: 85644
+  xbox:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/xbox.mrs'
+    path: ./ruleset/xbox.mrs
+    interval: 85644
   rockstar: {<<: *class-yaml, url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Rockstar/Rockstar.yaml",path: ./ruleset/Rockstar.yaml}
   riot: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Riot/Riot.yaml",path: ./ruleset/Riot.yaml}
   wildrift: {<<: *class-yaml, url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/WildRift/WildRift.yaml",path: ./ruleset/WildRift.yaml}
@@ -1015,6 +1023,13 @@ rule-providers:
     format: mrs
     url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tencent@!cn.mrs'
     path: ./ruleset/tencent@!cn.mrs
+    interval: 85644
+  category-games:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games.mrs'
+    path: ./ruleset/category-games.mrs
     interval: 85644
   Telegram:
     type: http
@@ -1114,7 +1129,20 @@ rule-providers:
     url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-porn.mrs'
     path: ./ruleset/category-porn
     interval: 86383  
-  pornhub: {<<: *class-yaml, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/pornhub.yaml",path: ./ruleset/pornhub.yaml}
+  missav:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/missav.mrs'
+    path: ./ruleset//missav.mrs
+    interval: 86383   
+  pornhub:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/pornhub.mrs'
+    path: ./ruleset//pornhub.mrs
+    interval: 86383 
   acc-aqara-global:
     type: http
     behavior: classical
@@ -1177,6 +1205,20 @@ rule-providers:
     url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/xiaomi@!cn.mrs'
     path: ./ruleset/xiaomi@!cn.mrs
     interval: 86383 
+  dropbox:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/dropbox.mrs'
+    path: ./ruleset/dropbox.mrs
+    interval: 86383   
+  notion:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/notion.mrs'
+    path: ./ruleset/notion.mrs
+    interval: 86383    
   
   Crypto: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-cryptocurrency.mrs",path: ./ruleset/category-cryptocurrency.mrs}
   cryptocurrency:
@@ -1250,13 +1292,22 @@ rule-providers:
     path: ./ruleset/private_ip.mrs
     interval: 85644 
   GamesCN: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games-cn.mrs",path:./ruleset/category-games-cn.mrs}
+  category-games@cn:
+    type: http
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games@cn.mrs'
+    path: ./ruleset/category-games@cn.mrs
+    interval: 85644
   Bank-CN: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-bank-cn.mrs",path: ./ruleset/category-bank-cn.mrs}
   category-bank-cn: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-bank-cn.mrs",path: ./ruleset/category-bank-cn.mrs}
-  SteamCN:
+  steam@cn:
     type: http
-    behavior: classical
-    url: 'https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/SteamCN/SteamCN.yaml'
-    path: ./ruleset/bm7-SteamCN.yaml
+    behavior: domain
+    format: mrs
+    url: 'https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam@cn.mrs'
+    path: ./ruleset/steam@cn.mrs
+    interval: 85644
   taptap: {<<: *mrs-domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/taptap.mrs",path: ./ruleset/geosite/taptap.mrs}
   XboxCN: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/xbox@cn.mrs",path: ./ruleset/xbox_cn.mrs }
   Accelerator: {<<: *mrs-domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-game-accelerator-cn.mrs",path: ./ruleset/category-game-accelerator-cn.mrs}
