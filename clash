@@ -8,7 +8,7 @@
 #Anchor_PR: &Anchor_PR {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://www.g.cn/generate_204', interval: 300}, filter: "^(?!.*(到期|过期|剩余|网址|官网|邮箱|订阅|套餐|流量|说明|重置)).*$"}
 Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点", DIRECT, REJECT]}
 # 广告拦截策略模板
-Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT,"🚀节点选择",🎯直连]}
+Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT,"🚀节点选择"]}
 # ③ 策略锚点 # 代理组锚点 hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
 # 手动选择
 Anchor_HS: &Anchor_HS {type: select,hidden: true, include-all: true, url: 'https://www.gstatic.com/generate_204'}
@@ -84,19 +84,7 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'C'  
-  Airport4:
-    url: "https://sub.445569.xyz"
-    type: http
-    interval: 3600
-    path: ./proxy_providers/Airport4.yaml
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-      proxy: DIRECT
-    override:
-      udp: true
-      additional-prefix: 'D'    
+
 
 
   
@@ -439,7 +427,6 @@ proxy-groups:
   - {name: "📘Meta",   <<: *Anchor_OB, icon:   'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/meta/default.svg'} 
   - {name: "📺迪士尼TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
   - {name: "📺其他TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
-  
   - {name: "💬国际即时通讯",   <<: *Anchor_OB, icon:     'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/line/default.svg' } 
   - {name: "🧠AI",   <<: *Anchor_OB, icon:     'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/react/default.svg' } 
   - {name: "🎮游戏平台",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Game.png'} 
@@ -450,19 +437,6 @@ proxy-groups:
   - {name:  "🐬国外网站",   <<: *Anchor_OB, icon:  'https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/github.png'} 
   - {name:  "🧑‍💻货币",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Cryptocurrency_3.png'} 
   - {name:  "💶金融支付",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/paypal/default.svg'} 
-   # 4. 乱码及未知识别收容组
-  - name: "🗑️未知识别"
-    type: select
-    use:
-      - Airport1
-      - Airport2
-    # 正则释义：
-    # 排除所有已知正常的地区词（香港、台湾、日本、韩国、美国、新加坡、欧洲等）
-    # 排除所有已知线路词（iplc, iepl, 专线, 直连）
-    # 剩下的“奇葩名字”、“乱码节点”、“通知节点”全部会被抓进这个组里
-    filter: '^(?i)((?!(香港|台湾|日本|韩国|美国|新加坡|英国|德国|法国|欧洲|澳大利亚|澳洲|加拿大|阿根廷|墨西哥|巴西|非洲|南非|埃及|泰国|印尼|印度尼西亚|越南|土耳其|印度|马来西亚|菲律宾|HK|TW|JP|KR|US|SG|UK|DE|FR|EU|AU|CA|AR|MX|BR|ZA|EG|TH|ID|VN|TR|IN|MY|PH|iplc|iepl|专线|直连|resi|home|isp|宽带|自动|负载|全部)).)*$'    
-    icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'
-
   - {name: "🧪抖音", type: select, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/tiktok/dark.svg', proxies: ["🎯直连","🚀节点选择"]}
   - {name: "🧸哔哩哔哩", type: select, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bilibili/default.svg', proxies: ["🎯直连","🚀节点选择"]}
   - {name: "☁️小红书", type: select, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/xiaohongshu/default.svg', proxies: ["🎯直连","🚀节点选择"]}
@@ -491,16 +465,12 @@ proxy-groups:
   - {name: "🔯 欧洲故转" ,   <<: *Anchor_FB, proxies: ["🇪🇺 欧洲节点", "🇪🇺 欧洲自动"],icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
   - {name: "🇪🇺 欧洲节点" ,   <<: *Anchor_HS, filter: *Anchor_EU,  icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
   - {name: "🇪🇺 欧洲自动"  ,   <<: *Anchor_UT, filter: *Anchor_EU, icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
-  
   - {name: "🔯 泰国故转" ,   <<: *Anchor_FB, proxies: ["🇹🇭 泰国节点", "🇹🇭 泰国自动"]}
   - {name: "🇹🇭 泰国节点" ,   <<: *Anchor_HS, filter: *Anchor_TH}
   - {name: "🇹🇭 泰国自动"  ,   <<: *Anchor_UT, filter: *Anchor_TH}
-  
   - {name: "🔯 澳大利亚故转" ,   <<: *Anchor_FB, proxies: ["🇦🇺 澳大利亚节点", "🇦🇺 澳大利亚自动"]}
   - {name: "🇦🇺 澳大利亚节点" ,   <<: *Anchor_HS, filter: *Anchor_AU}
   - {name: "🇦🇺 澳大利亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_AU}
-  
-  
   - {name: "🔯 印度尼西亚故转" ,   <<: *Anchor_FB, proxies: ["🇮🇩 印度尼西亚节点", "🇮🇩 印度尼西亚自动"]}
   - {name: "🇮🇩 印度尼西亚节点" ,   <<: *Anchor_HS, filter: *Anchor_ID}
   - {name: "🇮🇩 印度尼西亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_ID}
@@ -519,7 +489,6 @@ proxy-groups:
   - {name: "🔯 菲律宾故转" ,   <<: *Anchor_FB, proxies: ["🇵🇭 菲律宾节点", "🇵🇭 菲律宾自动"]}
   - {name: "🇵🇭 菲律宾节点" ,   <<: *Anchor_HS, filter: *Anchor_PH }
   - {name: "🇵🇭 菲律宾自动"  ,   <<: *Anchor_UT, filter: *Anchor_PH }
-  
   - name: "🏝 美洲节点"
     type: select
     include-all: true
