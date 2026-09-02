@@ -6,7 +6,7 @@
 
 # ══ 订阅锚点 ══
 #Anchor_PR: &Anchor_PR {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://www.g.cn/generate_204', interval: 300}, filter: "^(?!.*(到期|过期|剩余|网址|官网|邮箱|订阅|套餐|流量|说明|重置)).*$"}
-Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点", DIRECT, REJECT]}
+Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点", DIRECT, REJECT]}
 # 广告拦截策略模板
 Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT,"🚀节点选择"]}
 # ③ 策略锚点 # 代理组锚点 hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
@@ -58,6 +58,8 @@ proxy-providers:
       udp: true
       additional-prefix: 'A'
       #additional-suffix: '蛋黄'   # 给节点名称后面加后缀，防止不同订阅的节点重名导致出现问题
+    filter: "^(?!.*(DIRECT|直接连接|导航网址|距离下次重置|剩余流量|套餐到期|网址导航|官网|订阅|到期|剩余|重置|免费|试用|应急|群|返利|循环|请不要|请|ping|不要|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|邀请|好友|失联|选择|剩余|公益|发布|DIZTNA|通路|登录|禁止|定时|渠道|牢记|永久|余额|阁下|本站|刷新|导航|⚠️|Expire|http|com|\bSign\b|\bLogin\b|\bRegister\b|\bHelp\b|\bFAQ\b)).*$"
+
   Airport2:
     url: "https://anaer.github.io/Sub/proxies.yaml"
     type: http
@@ -71,6 +73,8 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'B'
+    filter: "^(?!.*(DIRECT|直接连接|导航网址|距离下次重置|剩余流量|套餐到期|网址导航|官网|订阅|到期|剩余|重置|免费|试用|应急|群|返利|循环|请不要|请|ping|不要|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|邀请|好友|失联|选择|剩余|公益|发布|DIZTNA|通路|登录|禁止|定时|渠道|牢记|永久|余额|阁下|本站|刷新|导航|⚠️|Expire|http|com|\bSign\b|\bLogin\b|\bRegister\b|\bHelp\b|\bFAQ\b)).*$"
+      
   Airport3:
     url: "https://sub.maflya.com/?target=clash"
     type: http
@@ -84,13 +88,9 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'C'  
-
-
-
-  
+    filter: "^(?!.*(DIRECT|直接连接|导航网址|距离下次重置|剩余流量|套餐到期|网址导航|官网|订阅|到期|剩余|重置|免费|试用|应急|群|返利|循环|请不要|请|ping|不要|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|邀请|好友|失联|选择|剩余|公益|发布|DIZTNA|通路|登录|禁止|定时|渠道|牢记|永久|余额|阁下|本站|刷新|导航|⚠️|Expire|http|com|\bSign\b|\bLogin\b|\bRegister\b|\bHelp\b|\bFAQ\b)).*$"
 # 全局过滤节点  # 常用排除，保留不包含下面关键字的节点
 
-    exclude-filter: '(?i)(导航网址|距离下次重置|剩余流量|套餐到期|网址导航|官网|订阅|到期|剩余|重置|免费|试用|应急|群|返利|循环|请不要|请|ping|不要|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|邀请|好友|失联|选择|剩余|公益|发布|DIZTNA|通路|登录|禁止|定时|渠道|牢记|永久|余额|阁下|本站|刷新|导航|⚠️|Expire|http|com|\bSign\b|\bLogin\b|\bRegister\b|\bHelp\b|\bFAQ\b)'
 
 
 
@@ -363,7 +363,7 @@ sniffer:
 # ※※※※※※※※※※※※※※※ 代理策略组 ※※※※※※※※※※※※※※※
 # 策略组（按服务分组）
 proxy-groups:
-  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🔯 日本故转", "🔯 韩国故转","🔯 澳大利亚故转", "🔯 新加坡故转", "🔯 美国故转", "🔯 欧洲故转","🔯 泰国故转","🔯 印度尼西亚故转","🔯 越南故转", "🔯 土耳其故转","🔯 印度故转","🔯 马来西亚故转", "🔯 菲律宾故转", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
+  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
   - {name: "♻️自动选择", <<: *Anchor_UT, filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$", icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bastyon/default.svg'}
   - name:   "🏡家宽"
     type: select
@@ -423,7 +423,7 @@ proxy-groups:
   - {name: "🎬YouTube",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube/default.svg'} 
   #- {name: "🎶YouTubeMusic",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube-music/default.svg'} 
   - {name: "🎶TikTok",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/TikTok.png'} 
-  - {name: "🌱Twitter",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/loneshu7/mihomo_rules_profile/refs/heads/master/icon/Twitter.png'} 
+  - {name: "🌱Twitter",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/x/default.svg'} 
   - {name: "📘Meta",   <<: *Anchor_OB, icon:   'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/meta/default.svg'} 
   - {name: "📺迪士尼TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
   - {name: "📺其他TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
