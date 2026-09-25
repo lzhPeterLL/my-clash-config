@@ -43,7 +43,7 @@ Anchor_AU: &Anchor_AU '^(?i)(?=.*(澳洲|澳大利亚|悉尼|墨尔本|布里斯
 #========= 订阅链接 ========#
 proxy-providers:
   Airport1:
-    url: "https://sub.danhu.dpdns.org/paste/TG@FProxies260822Y4qC45A/clash"
+    url: "https://sub.danhu.dpdns.org/paste/26HappyMAF-TG@FProxies/clash"
     type: http
     interval: 3600
     path: ./proxy_providers/Airport1.yaml
