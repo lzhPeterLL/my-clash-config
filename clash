@@ -278,8 +278,7 @@ proxy-groups:
       - Airport1
       - Airport2
       - Airport3
-      - Airport4
-      - Airport5
+
     hidden: true
     #proxies:
        #- "🇯🇵 日本节点"
