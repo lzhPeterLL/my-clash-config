@@ -1,4 +1,3 @@
-
 # ※※※※※※※※※※※※※※※ 锚点区域 ※※※※※※※※※※※※※※※
 # ② 出站锚点
 # true 是启用
@@ -301,8 +300,7 @@ proxy-groups:
     lazy: true
     filter: '(?i)^(?=.*(resi|home|isp|eyeball|user|dynamic|家宽|家庭宽带|家庭住宅|住宅宽带|broadband|住宅|家庭|宽带|拨号))((?!(机房|IDC|DataCenter|BGP|Cloud|Server|Azure|AWS|Google)).)*$'
     icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Fam.png'
-  - { name: "⚖️负载均衡"  , <<: *base-loadbalance,  filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$",icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/battledotnet/default.svg'
-}
+  - { name: "⚖️负载均衡"  , <<: *base-loadbalance,  filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$",icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/battledotnet/default.svg'}
   - name: "🔯 故障转移"
     type: fallback
     url: "http://www.gstatic.com/generate_204"
