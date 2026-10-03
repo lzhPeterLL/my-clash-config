@@ -11,12 +11,12 @@ Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动�
 Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT,"🚀节点选择"]}
 # ③ 策略锚点 # 代理组锚点 hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
 # 手动选择
-Anchor_HS: &Anchor_HS {type: select,hidden: false, include-all: true, url: 'https://www.gstatic.com/generate_204'}
+Anchor_HS: &Anchor_HS {type: select,hidden: true, include-all: true, url: 'https://www.gstatic.com/generate_204'}
 # 负载均衡
 base-loadbalance: &base-loadbalance { type: load-balance, interval: 1800, lazy: true, timeout: 3000, max-failed-times: 3, empty-fallback: REJECT, include-all: true, strategy: sticky-sessions, hidden: true, url: https://www.gstatic.com/generate_204 }
 #规则集锚点
 # 自动回退 [每 300 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次自动触发健康检查]
-Anchor_FB: &Anchor_FB {type: fallback, url: 'https://www.g.cn/generate_204', interval: 300, lazy: false, timeout: 2000, max-failed-times: 3, hidden: false}
+Anchor_FB: &Anchor_FB {type: fallback, url: 'https://www.g.cn/generate_204', interval: 300, lazy: false, timeout: 2000, max-failed-times: 3, hidden: true}
 # 自动选择 [每 300 秒一次惰性健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次自动触发健康检查]
 Anchor_UT: &Anchor_UT {type: url-test, url: 'https://www.gstatic.com/generate_204', interval: 300, lazy: false, tolerance: 50, timeout: 2000, max-failed-times: 3, include-all: true}
 # ④ 规则锚点
@@ -306,20 +306,19 @@ proxy-groups:
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     lazy: true
-    proxies: 
-      - "🔯 日本故转" 
-      - "🔯 美国故转" 
-      - "🔯 欧洲故转"
-      - "🔯 韩国故转"
-      - "🔯 新加坡故转"
-      - "🔯 泰国故转" 
-      - "🔯 印度尼西亚故转"
-      - "🔯 越南故转"
-      - "🔯 土耳其故转"
-      - "🔯 印度故转"
-      - "🔯 马来西亚故转" 
-      - "🔯 菲律宾故转"
-      - "🔯 澳大利亚故转"
+    max-failed-times: 3
+    timeout: 3000     
+    empty-fallback: REJECT 
+    use:
+      - Airport1    
+      - Airport2
+      - Airport3
+      - Airport4
+      - Airport5 
+    filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk|澳门)).)*$"      
+      
+      #proxies: 
+
     icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/alby/default.svg'
   - {name: "🎵Spotify",   <<: *Anchor_OB, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/spotify/default.svg'} 
   - {name: "🎥Netflix",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png'} 
