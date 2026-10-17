@@ -116,7 +116,7 @@ proxy-providers:
       additional-prefix: 'E'
 
   Airport6:
-    url: "https://raw.githubusercontent.com/lzhPeterLL/my-clash-config/refs/heads/main/README"
+    url: "https://raw.githubusercontent.com/lzhPeterLL/my-clash-config/refs/heads/main/liqun"
     type: http
     interval: 3600
     path: ./proxy_providers/Airport6.yaml
