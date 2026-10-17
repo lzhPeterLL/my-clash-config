@@ -6,12 +6,15 @@
 
 # ══ 订阅锚点 ══
 #Anchor_PR: &Anchor_PR {type: http, interval: 86400, proxy: DIRECT, health-check: {enable: true, url: 'https://www.g.cn/generate_204', interval: 300}, filter: "^(?!.*(到期|过期|剩余|网址|官网|邮箱|订阅|套餐|流量|说明|重置)).*$"}
-Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动选择","🏡家宽","🔯 故障转移", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点", DIRECT, REJECT]}
+Anchor_OB: &Anchor_OB {type: select, proxies: ["🚀节点选择","♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动", DIRECT, REJECT]}
 # 广告拦截策略模板
 Anchor_ADV: &Anchor_ADV {type: select, proxies: [REJECT, DIRECT,"🚀节点选择"]}
 # ③ 策略锚点 # 代理组锚点 hidden: true 是为了隐藏地区分组，有需要显示出来的佬友可以删除
 # 手动选择
 Anchor_HS: &Anchor_HS {type: select,hidden: true, include-all: true, url: 'https://www.gstatic.com/generate_204'}
+# 负载均衡
+base-loadbalance: &base-loadbalance { type: load-balance, interval: 1800, lazy: true, timeout: 3000, max-failed-times: 3, empty-fallback: REJECT, include-all: true, strategy: sticky-sessions, hidden: true, url: https://www.gstatic.com/generate_204 }
+#规则集锚点
 # 自动回退 [每 300 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次自动触发健康检查]
 Anchor_FB: &Anchor_FB {type: fallback, url: 'https://www.g.cn/generate_204', interval: 300, lazy: false, timeout: 2000, max-failed-times: 3, hidden: true}
 # 自动选择 [每 300 秒一次惰性健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次自动触发健康检查]
@@ -70,8 +73,10 @@ proxy-providers:
     override:
       udp: true
       additional-prefix: 'B'
+    exclude-filter: '(?i)(导航网址|距离下次重置|剩余流量|套餐到期|网址导航|官网|订阅|到期|剩余|重置|免费|试用|应急|群|返利|循环|请不要|请|ping|不要|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|邀请|好友|失联|选择|剩余|公益|发布|DIZTNA|通路|登录|禁止|定时|渠道|牢记|永久|余额|阁下|本站|刷新|导航|⚠️|Expire|http|com|\bSign\b|\bLogin\b|\bRegister\b|\bHelp\b|\bFAQ\b)'
+
   Airport3:
-    url: "https://hhsxy.vavava.kdns.fr/sub?token=3a1bac4463da40a629e167caf99d2b0a"
+    url: "https://sub.maflya.com/?target=clash"
     type: http
     interval: 3600
     path: ./proxy_providers/Airport3.yaml
@@ -82,7 +87,8 @@ proxy-providers:
       proxy: DIRECT
     override:
       udp: true
-      additional-prefix: 'c'
+      additional-prefix: 'C'
+
 
 
 #========= 全局配置 ========#
@@ -116,7 +122,7 @@ ntp: {enable: true, server: time.apple.com, port: 123, interval: 30, dialer-prox
 
 
 # 实验性功能
-external-controller-cors:
+external-controller-cors:               
   allow-origins: ["*"]
   allow-private-network: true          
 
@@ -145,7 +151,7 @@ external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/downloa
 tun:
   enable: true                                   # 开启 TUN 模式
   device: mihomo
-  stack: mixed                                  # 协议栈：mixed (混合) / system / gvisor
+  stack: mixed                                  ## 协议栈：mixed (混合) / system / gvisor / mips
   mtu: 1500
   inet4-address: [172.18.0.1/30]
   inet6-address: [fdfe:dcba:9876::1/126]
@@ -156,10 +162,10 @@ tun:
   auto-detect-interface: true   # 自动选择流量出口接口，多出口网卡同时连接的设备建议手动指定出口网卡
   gso: true
   gso-max-size: 65536
-  endpoint-independent-nat: true
+  endpoint-independent-nat: true        # 独立 NAT (Full Cone)，优化游戏/P2P
   udp-timeout: 60
-  disable-icmp-forwarding: true
-  route-exclude-address-set: ["rule-set:cn-ip", "rule-set:private-ip"]
+  disable-icmp-forwarding: true        
+  route-exclude-address-set: ["rule-set:cn-ip", "rule-set:private-ip"]         #绕过大陆 匹配大陆IP-CIDR（流量不进入代理）  # 绕过局域网内网流量
   route-exclude-cidr: ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]  
 
 #========= 数据库 ========#
@@ -179,7 +185,9 @@ dns:
   enable: true
   listen: 0.0.0.0:1053      # DNS 服务监听
   ipv6: false                 # 启用 IPv6 解析
-  enhanced-mode: fake-ip    # DNS 处理模式 fake-ip/redir-host
+  enhanced-mode: fake-ip    # DNS 处理模式 fake-ip/redir-host   返回一个虚拟 IP 给本地系统，实际解析由代理软件在远端完成，能彻底防止 DNS 泄露并极大加快连接速度。
+                            #redir-host：直接在远端解析真实域名。
+  
   timeout: 8000     
   cache-algorithm: arc
   cache: {enable: true, size: 4096, expired: 180}
@@ -189,17 +197,24 @@ dns:
   h3-grace-period: 2s
   use-hosts: true
   use-system-hosts: true
+  
+  
+  
+  
   respect-rules: true             # DNS 连接遵守路由规则，需配置 proxy-server-nameserver
+    # 是否遵循规则（false 表示所有 DNS 查询都通过直连查询，不经过代理规则）
+    #让 DNS 查询严格遵守分流规则。
   
   # Fake-IP 过滤列表（这些域名将返回真实 IP 而非 Fake-IP）
   fake-ip-filter-mode: blacklist       # Fake-IP 过滤模式：blacklist（黑名单）/ whitelist（白名单）
   fake-ip-ttl: 60
+  
   fake-ip-filter: ["localhost","+.lan","+.local","+.arpa","+.ntp.org","captive.apple.com","connectivitycheck.gstatic.com","msftconnecttest.com","msftncsi.com","openai.*","+.openai.*","report-v2.samsung.japps.cn","rule-set:private"]
  
  
    
   ignore-resolve-fail: true
-  direct-nameserver: 
+  direct-nameserver:    # 用于解析下方 nameserver 中 DoH/DoT 的域名
     - 'https://dns.alidns.com/dns-query'
     - 'https://doh.pub/dns-query'
   
@@ -218,20 +233,41 @@ dns:
 
  
   # 主 DNS 服务器列表（用于实际域名解析）
-  nameserver: *global-dns
-
+  nameserver: *global-dns            #远端 DNS 服务器 (nameserver) —— 防泄露的核心
+                                    #   这里配置的服务器用于解析代理服务器的 IP 地址以及处理直连请求。为了防止 DNS 泄露，建议使用支持 DoH（DNS over HTTPS）或 DoT（DNS over TLS）的加密 DNS，或者使用各大公共 DNS：
+  
+  
+  
+  
+  
+  
+  
   
    # 节点域名解析服务器，仅用于解析代理节点的域名，不填则遵循 nameserver-policy、nameserver 和 fallback 的配置
   proxy-server-nameserver: *cn-dns
   
   # 后备域名解析服务器，一般情况下使用境外 DNS，保证结果可信，配置 fallback 后默认启用 fallback-filter，geoip-code 为 cn
+  # 代理/国外域名专属 DNS（走代理加密查询，防污染）
   fallback: 
     - 'https://dns.google/dns-query'
     - 'https://dns.cloudflare.com/dns-query'
+  
+  
+  #代理专属 DNS (fallback)
+  #当域名匹配到某些规则时，强制使用国外的加密 DNS 进行解析，确保海外域名不走本地运营商 DNS，进一步防止污染和泄露：
+  
+  
+  
+  
+  
+  # 配合 fallback 使用的白名单（只有匹配这些域名的才走 fallback）
   # 后备域名解析服务器筛选，满足条件的将使用 fallback 结果或只使用 fallback 解析
   fallback-filter: {geoip: true, geoip-code: CN, geosite: [gfw], ipcidr: ["240.0.0.0/4","0.0.0.0/32","127.0.0.0/8","10.0.0.0/8","192.168.0.0/16"]}
   
   direct-nameserver-follow-policy: true
+  
+  
+  
   nameserver-policy:
     "rule-set:private": *cn-dns
     "rule-set:cn": *cn-dns
@@ -244,6 +280,7 @@ sniffer:
   enable: true                        # 启用嗅探  提升分流准确性
   force-dns-mapping: true             # 对 redir-host 类型识别的流量进行强制嗅探
   parse-pure-ip: true                # 对所有未获取到域名的流量进行强制嗅探
+   # 嗅探协议配置
   sniff: {HTTP: {ports: [80, 8080-8880], override-destination: true}, TLS: {ports: [443, 8443]}, QUIC: {ports: [443, 8443]}}
   # 强制进行嗅探的域名
   force-domain: ["+.cloudflare.net","+.akamaized.net","+.akamai.net","+.fastly.net","+.cloudfront.net","+.googlevideo.com","+.googlecdn.com","+.ytimg.com","+.youtube.com","+.netflix.com","+.instagram.com","+.tiktokcdn.com","+.tiktokv.com","+.douyin.com","+.douyincdn.com","+.telegram.org","+.t.me","+.tdesktop.com","+.cdn-telegram.org","+.telegram-cdn.org","+.cdn.telegram.org"]  
@@ -255,61 +292,29 @@ sniffer:
 # ※※※※※※※※※※※※※※※ 代理策略组 ※※※※※※※※※※※※※※※
 # 策略组（按服务分组）
 proxy-groups:
-  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","🔯 故障转移", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动","🏝 美洲节点","🧬 非洲节点"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
+  - {name: "🚀节点选择", type: select, proxies: ["♻️自动选择","🏡家宽","⚖️负载均衡","🔯 故障转移", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇸🇬 新加坡自动", "🇺🇸 美国自动", "🇪🇺 欧洲自动","🇹🇭 泰国自动","🇮🇩 印度尼西亚自动","🇻🇳 越南自动","🇮🇳 印度自动","🇲🇾 马来西亚自动","🇦🇺 澳大利亚自动","🇵🇭 菲律宾自动","🇹🇷 土耳其自动"], icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/ClashMeta.png'}
   - {name: "♻️自动选择", <<: *Anchor_UT, filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$", icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bastyon/default.svg'}
-  - name:   "🏡家宽"
-    type: select
-    use:
-      - Airport1
-      - Airport2
-      #- Airport3
-    url: 'https://www.gstatic.com/generate_204'
-    interval: 120
-    tolerance: 30
-    lazy: true
-    filter: '(?i)^(?=.*(resi|home|isp|eyeball|user|dynamic|家宽|家庭宽带|家庭住宅|住宅宽带|broadband|住宅|家庭|宽带|拨号))((?!(机房|IDC|DataCenter|BGP|Cloud|Server|Azure|AWS|Google)).)*$'
-    icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Fam.png'
-  #- name: "⚖️负载均衡"  
-   # type: load-balance
-    #strategy: consistent-hashing
-    #url: "http://www.gstatic.com/generate_204"
-    #interval: 300
-    #proxies:
-       #- "🇯🇵 日本节点"
-       #- "🇺🇸 美国节点"
-      # - "🇰🇷 韩国节点"
-       #- "🇸🇬 新加坡节点"
-       #- "🇹🇭 泰国节点"
-      # - "🇮🇩 印度尼西亚节点"
-      # - "🇻🇳 越南节点"
-      # - "🇹🇷 土耳其节点"
-      # - "🇮🇳 印度节点"
-      # - "🇲🇾 马来西亚节点"
-       #- "🇵🇭 菲律宾节点"
-       #- "🇦🇺 澳大利亚节点"
-    #icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/battledotnet/default.svg'
+  - {name: "🏡家宽", <<: *Anchor_UT,exclude-type: 'direct|reject',empty-fallback: REJECT, filter: '(?i)^(?=.*(resi|home|isp|eyeball|user|dynamic|家宽|家庭宽带|家庭住宅|住宅宽带|broadband|住宅|家庭|宽带|拨号))((?!(机房|IDC|DataCenter|BGP|Cloud|Server|Azure|AWS|Google)).)*$', icon: 'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Fam.png'}
 
+  - { name: "⚖️负载均衡"  , <<: *base-loadbalance,  filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk)).)*$",icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/battledotnet/default.svg'}
   - name: "🔯 故障转移"
     type: fallback
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     lazy: true
-    proxies: 
-      - "🔯 日本故转" 
-      - "🔯 美国故转" 
-      - "🔯 欧洲故转"
-      - "🔯 韩国故转"
-      - "🔯 新加坡故转"
-      - "🔯 泰国故转" 
-      - "🔯 印度尼西亚故转"
-      - "🔯 越南故转"
-      - "🔯 土耳其故转"
-      - "🔯 印度故转"
-      - "🔯 马来西亚故转" 
-      - "🔯 菲律宾故转"
-      - "🔯 澳大利亚故转"
-    icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/alby/default.svg'
+    max-failed-times: 3
+    timeout: 3000     
+    empty-fallback: REJECT 
+    use:
+      - Airport1    
+      - Airport2
+      - Airport3
 
+    filter: "^((?!(中国|直连|台湾|TW|回国|Ls|Tw|HK|香港|Hk|澳门)).)*$"      
+      
+      #proxies: 
+
+    icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/alby/default.svg'
   - {name: "🎵Spotify",   <<: *Anchor_OB, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/spotify/default.svg'} 
   - {name: "🎥Netflix",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png'} 
   - {name: "🎬YouTube",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube/default.svg'} 
@@ -321,6 +326,7 @@ proxy-groups:
   - {name: "📺其他TV流媒体",   <<: *Anchor_OB, icon:    'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Disney+.png'}   
   - {name: "💬国际即时通讯",   <<: *Anchor_OB, icon:     'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/line/default.svg' } 
   - {name: "🧠AI",   <<: *Anchor_OB, icon:     'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/react/default.svg' } 
+  - {name: "🎮Steam",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Game.png'}   
   - {name: "🎮游戏平台",   <<: *Anchor_OB, icon:  'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Game.png'} 
   - {name: "✈️Telegram",   <<: *Anchor_OB, icon:   'https://raw.githubusercontent.com/sunfing/iNg/main/Icons/GeneralIcons/Telegram.png'}    
   - {name: "🪐Google服务",   <<: *Anchor_OB, icon:  'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/google/default.svg'} 
@@ -336,61 +342,61 @@ proxy-groups:
   - name: "🛑 广告拦截"
     <<: *Anchor_ADV
     icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/airflow/default.svg'
-  - {name: "🎯直连", type: select, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/safari/default.svg', proxies: ["DIRECT"], url: "http://connect.rom.miui.com/generate_204"}
+  - {name: "🎯直连", type: select, icon: 'https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/safari/default.svg', proxies: ["DIRECT"]}
   - {name: "🐟漏网之鱼", type: select, icon: 'https://raw.githubusercontent.com/Seven1echo/Yaml/main/icons/MATCH.png', proxies: ["🚀节点选择"]}
 
 
 # 策略组（按区域分组）
 # 线路特性层 - Fallback故障转移，（适合不想节点总是被切换或者对固定IP有要求，若手动选择节点飘红 会自动切到智能策略组，保证节点可用性）  
-  - {name: "🔯 日本故转",   <<: *Anchor_FB, proxies: ["🇯🇵 日本节点", "🇯🇵 日本自动"], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png'}
-  - {name: "🇯🇵 日本节点",   <<: *Anchor_HS, filter: *Anchor_JP, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png'}
-  - {name: "🇯🇵 日本自动",   <<: *Anchor_UT, filter: *Anchor_JP, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png'}
-  - {name: "🔯 韩国故转",   <<: *Anchor_FB, proxies: ["🇰🇷 韩国节点","🇰🇷 韩国自动"], icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/South_Korea.png'}
-  - {name: "🇰🇷 韩国节点",   <<: *Anchor_HS, filter: *Anchor_KR, icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/South_Korea.png'}
-  - {name: "🇰🇷 韩国自动",   <<: *Anchor_UT, filter: *Anchor_KR, icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/South_Korea.png'}
-  - {name: "🔯 新加坡故转", <<: *Anchor_FB, proxies: ["🇸🇬 新加坡节点","🇸🇬 新加坡自动"], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png'}
-  - {name: "🇸🇬 新加坡节点", <<: *Anchor_HS, filter: *Anchor_SG, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png'}
-  - {name: "🇸🇬 新加坡自动", <<: *Anchor_UT, filter: *Anchor_SG, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png'}
-  - {name: "🔯 美国故转",   <<: *Anchor_FB, proxies: ["🇺🇸 美国节点", "🇺🇸 美国自动"], icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png'}
-  - {name: "🇺🇸 美国节点",   <<: *Anchor_HS, filter: *Anchor_US, icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png'}
-  - {name: "🇺🇸 美国自动",   <<: *Anchor_UT, filter: *Anchor_US, icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png'}
-  - {name: "🔯 欧洲故转" ,   <<: *Anchor_FB, proxies: ["🇪🇺 欧洲节点", "🇪🇺 欧洲自动"],icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
-  - {name: "🇪🇺 欧洲节点" ,   <<: *Anchor_HS, filter: *Anchor_EU,  icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
-  - {name: "🇪🇺 欧洲自动"  ,   <<: *Anchor_UT, filter: *Anchor_EU, icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
-  - {name: "🔯 泰国故转" ,   <<: *Anchor_FB, proxies: ["🇹🇭 泰国节点", "🇹🇭 泰国自动"]}
-  - {name: "🇹🇭 泰国节点" ,   <<: *Anchor_HS, filter: *Anchor_TH}
-  - {name: "🇹🇭 泰国自动"  ,   <<: *Anchor_UT, filter: *Anchor_TH}
-  - {name: "🔯 澳大利亚故转" ,   <<: *Anchor_FB, proxies: ["🇦🇺 澳大利亚节点", "🇦🇺 澳大利亚自动"]}
-  - {name: "🇦🇺 澳大利亚节点" ,   <<: *Anchor_HS, filter: *Anchor_AU}
-  - {name: "🇦🇺 澳大利亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_AU}
-  - {name: "🔯 印度尼西亚故转" ,   <<: *Anchor_FB, proxies: ["🇮🇩 印度尼西亚节点", "🇮🇩 印度尼西亚自动"]}
-  - {name: "🇮🇩 印度尼西亚节点" ,   <<: *Anchor_HS, filter: *Anchor_ID}
-  - {name: "🇮🇩 印度尼西亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_ID}
-  - {name: "🔯 越南故转" ,   <<: *Anchor_FB, proxies: ["🇻🇳 越南节点", "🇻🇳 越南自动"]}
-  - {name: "🇻🇳 越南节点" ,   <<: *Anchor_HS, filter: *Anchor_VN}
-  - {name: "🇻🇳 越南自动"  ,   <<: *Anchor_UT, filter: *Anchor_VN}
-  - {name: "🔯 土耳其故转" ,   <<: *Anchor_FB, proxies: ["🇹🇷 土耳其节点", "🇹🇷 土耳其自动"]}
-  - {name: "🇹🇷 土耳其节点" ,   <<: *Anchor_HS, filter: *Anchor_TR}
-  - {name: "🇹🇷 土耳其自动"  ,   <<: *Anchor_UT, filter: *Anchor_TR}
-  - {name: "🔯 印度故转" ,   <<: *Anchor_FB, proxies: ["🇮🇳 印度节点", "🇮🇳 印度自动"]}
-  - {name: "🇮🇳 印度节点" ,   <<: *Anchor_HS, filter: *Anchor_IN}
-  - {name: "🇮🇳 印度自动"  ,   <<: *Anchor_UT, filter: *Anchor_IN}
-  - {name: "🔯 马来西亚故转" ,   <<: *Anchor_FB, proxies: ["🇲🇾 马来西亚节点", "🇲🇾 马来西亚自动"]}
-  - {name: "🇲🇾 马来西亚节点" ,   <<: *Anchor_HS, filter: *Anchor_MY}
-  - {name: "🇲🇾 马来西亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_MY}
-  - {name: "🔯 菲律宾故转" ,   <<: *Anchor_FB, proxies: ["🇵🇭 菲律宾节点", "🇵🇭 菲律宾自动"]}
-  - {name: "🇵🇭 菲律宾节点" ,   <<: *Anchor_HS, filter: *Anchor_PH }
-  - {name: "🇵🇭 菲律宾自动"  ,   <<: *Anchor_UT, filter: *Anchor_PH }
-  - name: "🏝 美洲节点"
-    type: select
-    include-all: true
-    filter: '(?i)^(?=.*(美国|United\s*States|USA|加拿大|Canada|墨西哥|Mexico|巴西|Brazil|阿根廷|Argentina|LAX|SJC|SFO|JFK|🇺🇸|🇨🇦|🇲🇽|🇧🇷|AR))((?!(resi|isp|家宽)).)*$'
-    icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Remote.png'
-  - name: "🧬 非洲节点"
-    type: select
-    include-all: true
-    filter: '(?i)^(?=.*(非洲|Africa|南非|South\s*Africa|埃及|Egypt|🇿🇦|🇪🇬))((?!(resi|isp|家宽)).)*$'
-    icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Bytedance.png'
+ # - {name: "🔯 日本故转",   <<: *Anchor_FB, proxies: ["🇯🇵 日本节点", "🇯🇵 日本自动"], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png'}
+  #- {name: "🇯🇵 日本节点",   <<: *Anchor_HS, filter: *Anchor_JP, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png'}
+  - {name: "🇯🇵 日本自动",   <<: *Anchor_UT, filter: *Anchor_JP,exclude-type: 'direct|reject',empty-fallback: REJECT, hidden: true , icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png'}
+ # - {name: "🔯 韩国故转",   <<: *Anchor_FB, proxies: ["🇰🇷 韩国节点","🇰🇷 韩国自动"], icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/South_Korea.png'}
+  #- {name: "🇰🇷 韩国节点",   <<: *Anchor_HS, filter: *Anchor_KR, icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/South_Korea.png'}
+  - {name: "🇰🇷 韩国自动",   <<: *Anchor_UT, filter: *Anchor_KR,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true , icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/South_Korea.png'}
+  #- {name: "🔯 新加坡故转", <<: *Anchor_FB, proxies: ["🇸🇬 新加坡节点","🇸🇬 新加坡自动"], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png'}
+  #- {name: "🇸🇬 新加坡节点", <<: *Anchor_HS, filter: *Anchor_SG, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png'}
+  - {name: "🇸🇬 新加坡自动", <<: *Anchor_UT, filter: *Anchor_SG,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true , icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png'}
+  #- {name: "🔯 美国故转",   <<: *Anchor_FB, proxies: ["🇺🇸 美国节点", "🇺🇸 美国自动"], icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png'}
+  #- {name: "🇺🇸 美国节点",   <<: *Anchor_HS, filter: *Anchor_US, icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png'}
+  - {name: "🇺🇸 美国自动",   <<: *Anchor_UT, filter: *Anchor_US,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true , icon:  'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png'}
+  #- {name: "🔯 欧洲故转" ,   <<: *Anchor_FB, proxies: ["🇪🇺 欧洲节点", "🇪🇺 欧洲自动"],icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
+  #- {name: "🇪🇺 欧洲节点" ,   <<: *Anchor_HS, filter: *Anchor_EU,  icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
+  - {name: "🇪🇺 欧洲自动"  ,   <<: *Anchor_UT, filter: *Anchor_EU,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true , icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/European_Union.png'}
+  #- {name: "🔯 泰国故转" ,   <<: *Anchor_FB, proxies: ["🇹🇭 泰国节点", "🇹🇭 泰国自动"]}
+  #- {name: "🇹🇭 泰国节点" ,   <<: *Anchor_HS, filter: *Anchor_TH}
+  - {name: "🇹🇭 泰国自动"  ,   <<: *Anchor_UT, filter: *Anchor_TH,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true }
+  #- {name: "🔯 澳大利亚故转" ,   <<: *Anchor_FB, proxies: ["🇦🇺 澳大利亚节点", "🇦🇺 澳大利亚自动"]}
+  #- {name: "🇦🇺 澳大利亚节点" ,   <<: *Anchor_HS, filter: *Anchor_AU}
+  - {name: "🇦🇺 澳大利亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_AU,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true}
+  #- {name: "🔯 印度尼西亚故转" ,   <<: *Anchor_FB, proxies: ["🇮🇩 印度尼西亚节点", "🇮🇩 印度尼西亚自动"]}
+ # - {name: "🇮🇩 印度尼西亚节点" ,   <<: *Anchor_HS, filter: *Anchor_ID}
+  - {name: "🇮🇩 印度尼西亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_ID,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true}
+  #- {name: "🔯 越南故转" ,   <<: *Anchor_FB, proxies: ["🇻🇳 越南节点", "🇻🇳 越南自动"]}
+  #- {name: "🇻🇳 越南节点" ,   <<: *Anchor_HS, filter: *Anchor_VN}
+  - {name: "🇻🇳 越南自动"  ,   <<: *Anchor_UT, filter: *Anchor_VN,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true}
+ # - {name: "🔯 土耳其故转" ,   <<: *Anchor_FB, proxies: ["🇹🇷 土耳其节点", "🇹🇷 土耳其自动"]}
+  #- {name: "🇹🇷 土耳其节点" ,   <<: *Anchor_HS, filter: *Anchor_TR}
+  - {name: "🇹🇷 土耳其自动"  ,   <<: *Anchor_UT, filter: *Anchor_TR,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true}
+  #- {name: "🔯 印度故转" ,   <<: *Anchor_FB, proxies: ["🇮🇳 印度节点", "🇮🇳 印度自动"]}
+  #- {name: "🇮🇳 印度节点" ,   <<: *Anchor_HS, filter: *Anchor_IN}
+  - {name: "🇮🇳 印度自动"  ,   <<: *Anchor_UT, filter: *Anchor_IN,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true}
+  #- {name: "🔯 马来西亚故转" ,   <<: *Anchor_FB, proxies: ["🇲🇾 马来西亚节点", "🇲🇾 马来西亚自动"]}
+  #- {name: "🇲🇾 马来西亚节点" ,   <<: *Anchor_HS, filter: *Anchor_MY}
+  - {name: "🇲🇾 马来西亚自动"  ,   <<: *Anchor_UT, filter: *Anchor_MY,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true}
+  #- {name: "🔯 菲律宾故转" ,   <<: *Anchor_FB, proxies: ["🇵🇭 菲律宾节点", "🇵🇭 菲律宾自动"]}
+ # - {name: "🇵🇭 菲律宾节点" ,   <<: *Anchor_HS, filter: *Anchor_PH }
+  - {name: "🇵🇭 菲律宾自动"  ,   <<: *Anchor_UT, filter: *Anchor_PH,exclude-type: 'direct|reject',empty-fallback: REJECT,hidden: true }
+   #- name: "🏝 美洲节点"
+   #  type: select
+    # include-all: true
+    # filter: '(?i)^(?=.*(美国|United\s*States|USA|加拿大|Canada|墨西哥|Mexico|巴西|Brazil|阿根廷|Argentina|LAX|SJC|SFO|JFK|🇺🇸|🇨🇦|🇲🇽|🇧🇷|AR))((?!(resi|isp|家宽)).)*$'
+     #icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Remote.png'
+   #- name: "🧬 非洲节点"
+   #  type: select
+    # include-all: true
+    # # filter: '(?i)^(?=.*(非洲|Africa|南非|South\s*Africa|埃及|Egypt|🇿🇦|🇪🇬))((?!(resi|isp|家宽)).)*$'
+    # icon: 'https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Bytedance.png'
  
 # ※※※※※※※※※※※※※※※ 锚点区域 ※※※※※※※※※※※※※※※
 rules:
@@ -471,7 +477,7 @@ rules:
   - RULE-SET,AI,🧠AI 
   - RULE-SET,gemini,🧠AI 
   - RULE-SET,openai,🧠AI  
-  - RULE-SET,Steam,🎮游戏平台
+  - RULE-SET,Steam,🎮Steam
   - RULE-SET,Nintendo,🎮游戏平台           # 任天堂
   - RULE-SET,games-!cn,🎮游戏平台          
   - RULE-SET,GamesGlobal,🎮游戏平台  # 非中国区游戏平台走代理兜底
