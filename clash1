@@ -116,7 +116,7 @@ proxy-providers:
       additional-prefix: 'E'
 
   Airport6:
-    url: "https://gh-proxy.org/https://raw.githubusercontent.com/LancelotRar/free-subs/refs/heads/main/src/clash-lancelot.yaml"
+    url: "https://raw.githubusercontent.com/lzhPeterLL/my-clash-config/refs/heads/main/README"
     type: http
     interval: 3600
     path: ./proxy_providers/Airport6.yaml
