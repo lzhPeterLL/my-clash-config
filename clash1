@@ -102,7 +102,7 @@ proxy-providers:
       udp: true
       additional-prefix: 'D'
   Airport5:
-    url: "https://lq-free.lancelot.dpdns.org/c/?token=@liqunchannel-ch-whob98aaakj0zcsd-1009-1018"
+    url: "https://gh-proxy.org/https://raw.githubusercontent.com/LancelotRar/free-subs/main/src/vpngate-nodes/jp50-kr50-nodes-converted.yaml"    #家宽
     type: http
     interval: 3600
     path: ./proxy_providers/Airport5.yaml
@@ -113,10 +113,10 @@ proxy-providers:
       proxy: DIRECT
     override:
       udp: true
-      additional-prefix: 'E'
+      additional-prefix: 'E'   #家宽
 
   Airport6:
-    url: "https://raw.githubusercontent.com/lzhPeterLL/my-clash-config/refs/heads/main/liqun"
+    url: "https://gh-proxy.org/https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta-2.yaml"
     type: http
     interval: 3600
     path: ./proxy_providers/Airport6.yaml
