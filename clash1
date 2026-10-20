@@ -116,7 +116,7 @@ proxy-providers:
       additional-prefix: 'E'   #家宽
 
   Airport6:
-    url: "https://gh-proxy.org/https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta-2.yaml"
+    url: "https://raw.githubusercontent.com/lzhPeterLL/my-clash-config/refs/heads/main/liqun"
     type: http
     interval: 3600
     path: ./proxy_providers/Airport6.yaml
@@ -127,9 +127,9 @@ proxy-providers:
       proxy: DIRECT
     override:
       udp: true
-      additional-prefix: 'F'
+      additional-prefix: 'F'    #家宽  自己仓库
   Airport7:
-    url: "https://raw.githubusercontent.com/lzhPeterLL/my-clash-config/refs/heads/main/liqun"
+    url: "https://lq-free.lancelot.dpdns.org/c/?token=@liqunchannel-ch-bpo49f5w1sa7hvje-1020-1027"
     type: http
     interval: 3600
     path: ./proxy_providers/Airport7.yaml
@@ -140,7 +140,7 @@ proxy-providers:
       proxy: DIRECT
     override:
       udp: true
-      additional-prefix: 'G'   #家宽
+      additional-prefix: 'G'   #利群
 
 
 #========= 全局配置 ========#
